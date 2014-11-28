@@ -1,0 +1,9 @@
+<config>
+    <server>localhost</server>
+    <db>_amt4pg</db>
+    <port>5432</port>
+    <user>postgres</user>
+    <passwd>root</passwd>
+    <time>20000</time>
+</config>
+
