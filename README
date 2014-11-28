@@ -30,7 +30,7 @@ se debe instalar las dependencias:
 
 python-bottle , psycopg2 , plpython
 
--sudo apt-get install python-bottle psycopg2 postgresql-plpython-X.Y
+-sudo apt-get install python-bottle python-psycopg2 python-psutil postgresql-plpython-X.Y
 
 Crear una base de datos en el servidor con nombre _amt4pg y cargue el script(_amt4pg.sql) del directorio sql ademas cree un usuario con permiso de administración,
 ir al directorio config y modificar el amt4pg.conf.xml con los datos de su servidor:
@@ -47,6 +47,7 @@ ir al directorio config y modificar el amt4pg.conf.xml con los datos de su servi
 El Valor de user es el usuario con permisos de administración que se creó anteriormente
 El valor de time es el tiempo de refrescamiento del servidor, es decir cada que tiempo el va a ir a buscar las maetricas al servidor
 
+Asegurarse que en el servidor de postgresql debe tener una entrada en el pg_hba.conf para amt4pg
 
 ======================================
 #Ejecución
