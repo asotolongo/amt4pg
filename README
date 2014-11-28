@@ -37,7 +37,7 @@ ir al directorio config y modificar el amt4pg.conf.xml con los datos de su servi
 
 <config>
     <server>localhost</server>
-    <db>_video</db>
+    <db>_amt4pg</db>
     <port>5432</port>
     <user>postgres</user>
     <passwd>tupass</passwd>
