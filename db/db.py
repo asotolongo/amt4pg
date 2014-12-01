@@ -109,10 +109,10 @@ class databasepg(database):
 class specificdatabasepg(database):
     """class conecction to general especific PG db"""
 
-    def __init__(self,db,passwd,usr="postgres",port="5432"):
+    def __init__(self,db,passwd,usr="postgres",port="5432",server="localhost"):
         try:
             self.db = db
-            self.connecction = psycopg2.connect(database=self.db, user=usr, port=port, password=passwd)
+            self.connecction = psycopg2.connect(host=server,database=self.db, user=usr, port=port, password=passwd)
             self.cursor = self.connecction.cursor()
         except Exception, e:
             print 'Error al conectarse al servidor: ', str(e)
@@ -173,7 +173,7 @@ class specificdatabasepg(database):
 
 
     def get_database_data_tables_mant(self):
-       query = "  SELECT ns.nspname||'.'|| pg.relname as name , psat.n_dead_tup, autovacuum_count,COALESCE( to_char(last_autovacuum,'YYYY:MM:DD-HH24:MI:SS'),'-'),vacuum_count," \
+       query = "  SELECT ns.nspname||'.'|| pg.relname as name ,age(relfrozenxid) as xid_age, psat.n_dead_tup, autovacuum_count,COALESCE( to_char(last_autovacuum,'YYYY:MM:DD-HH24:MI:SS'),'-'),vacuum_count," \
                "COALESCE(to_char(last_vacuum,'YYYY:MM:DD-HH24:MI:SS'),'-' ) , analyze_count,COALESCE( to_char(last_analyze,'YYYY:MM:DD-HH24:MI:SS'),'-'),autoanalyze_count," \
                "COALESCE( to_char(last_autoanalyze,'YYYY:MM:DD-HH24:MI:SS'),'-')  FROM pg_class pg JOIN pg_stat_all_tables psat ON (pg.relname = psat.relname)  join pg_namespace a on" \
                " ( pg.relnamespace = a.oid)  join pg_namespace ns  on (pg.relnamespace = ns.oid)  where a.nspname <> 'pg_catalog'    and a.nspname <> 'information_schema' and a.nspname <> 'pg_toast'  ORDER BY 2 DESC   "

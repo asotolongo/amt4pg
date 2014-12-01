@@ -20,7 +20,7 @@
 <div class="panel-heading" align="center"  ><b style="color:#ffffff " >Bases de datos/Peso:</b></div>
 
 <table border="1" class="table table-striped"   >
-<tr >
+<tr class="encabezado_tabla">
  <td ><b>Nombre</b></td>
  <td><b>Peso</b></td>
 </tr>
@@ -40,7 +40,7 @@
 <div class="panel-heading" align="center"  ><b style="color:#ffffff " >Commits/Rollbacks:</b></div>
 
 <table border="1" class="table table-striped"   >
-<tr >
+<tr class="encabezado_tabla" >
  <td ><b>Commit</b></td>
  <td><b>Rollback</b></td>
 </tr>
@@ -65,7 +65,7 @@
 <div class="panel-heading" align="center" ><b style="color:#ffffff " > Tablas:</b></div>
 
 <table border="1" class="table table-striped">
-<tr>
+<tr class="encabezado_tabla">
   <td><b>Nombre</b></td>
  <td><b>Tuplas</b></td>
  <td><b>Peso</b></td>
@@ -100,17 +100,18 @@
 <div class="panel-heading" align="center" ><b style="color:#ffffff " > Mantenimiento:</b></div>
 
 <table border="1" class="table table-striped">
-<tr>
+<tr class="encabezado_tabla">
   <td><b>Nombre</b></td>
+  <td><b>Xid</b></td>
  <td><b>Tup. Muertas</b></td>
- <td><b>Cant. AutoVaccum</b></td>
- <td><b>Ult. AutoVaccum</b></td>
+ <td><b>Cant. A.Vaccum</b></td>
+ <td><b>Ult. A.Vaccum</b></td>
  <td><b>Cant. Vaccum</b></td>
  <td><b>Ult. Vaccum</b></td>
  <td><b>Cant. Analyze</b></td>
  <td><b>Ult. Analyze</b></td>
- <td><b>Cant. AutoAnalyze</b></td>
- <td><b>Ult. AutoAnalyze</b></td>
+ <td><b>Cant. A.Analyze</b></td>
+ <td><b>Ult. A.Analyze</b></td>
 </tr>
 %for field in datatablesmant:
 <tr class="contenido_tabla">
@@ -124,6 +125,7 @@
  <td>{{field[7]}}</td>
  <td>{{field[8]}}</td>
  <td>{{field[9]}}</td>
+ <td>{{field[10]}}</td>
 </tr>
 %end
 </table>
@@ -134,7 +136,7 @@
 <div class="panel-heading" align="center" ><b style="color:#ffffff "  > Índices:</b></div>
 
 <table border="1"  class="table table-striped">
-<tr>
+<tr class="encabezado_tabla">
  <td><b>Esquema</b></td>
  <td><b>Tabla</b></td>
  <td><b>Nombre</b></td>
@@ -161,7 +163,7 @@
 <div class="panel-heading" align="center" ><b style="color:#ffffff " > Actividad:</b></div>
 
 <table border="1"  class="table table-striped">
-<tr>
+<tr class="encabezado_tabla">
  <td><b>Usuario</b></td>
  <td><b>Estado</b></td>
  <td><b>Consulta</b></td>
@@ -185,7 +187,7 @@
 <div class="panel-heading" align="center" ><b style="color:#ffffff "  > Vistas:</b></div>
 
 <table border="1" class="table table-striped">
-<tr>
+<tr class="encabezado_tabla" >
  <td><b>Esquema<b></td>
  <td><b>Nombre<b></td>
 </tr>
@@ -204,7 +206,7 @@
 <div class="panel-heading" align="center" ><b style="color:#ffffff "  > Triggers:</b></div>
 
 <table border="1" class="table table-striped">
-<tr>
+<tr class="encabezado_tabla" >
  <td><b>Esquema</b></td>
  <td><b>Nombre</b></td>
  <td><b>Evento</b></td>

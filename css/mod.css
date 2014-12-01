@@ -1,7 +1,7 @@
 .panel-default {
     border-color: #FFF;
 
-    width: 95%;
+    width: 100%;
     border-width: 1px;
 
 }
@@ -17,6 +17,10 @@
 }
 
 .contenido_tabla {
+    font-size: 12px;
+
+}
+.encabezado_tabla {
     font-size: 15px;
 
 }

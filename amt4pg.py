@@ -4,7 +4,7 @@ __author__ = 'anthony'
 try:
     from bottle import  route, run, template, static_file, error, Bottle
     from db.db import  specificdatabasepg
-    from config.cargar import pg,contrasena,usuario,puerto,tiempo
+    from config.cargar import pg,contrasena,usuario,puerto,tiempo,servidor
     import psutil
 except ImportError,e:
     print "Error al importar :", str(e)
@@ -79,7 +79,7 @@ def specificreportpg(db):
     if db == "bootstrap.css":
         return None
 
-    databasespecificpg = specificdatabasepg(str(db),contrasena ,usuario,puerto)
+    databasespecificpg = specificdatabasepg(str(db),contrasena ,usuario,puerto,servidor)
 
     datadate = databasespecificpg.get_date()
     datatime = databasespecificpg.get_time()
@@ -107,7 +107,7 @@ def specificreportpg(db):
     if db == "bootstrap.css":
         return None
 
-    databasespecificpg = specificdatabasepg('_amt4pg',contrasena ,usuario,puerto)
+    databasespecificpg = specificdatabasepg('_amt4pg',contrasena ,usuario,puerto,servidor)
 
     datadate = databasespecificpg.get_date()
     datatime = databasespecificpg.get_time()

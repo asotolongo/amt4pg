@@ -11,8 +11,6 @@ CREATE TABLE log_values
 CREATE TYPE resource AS
    (text text,
     value double precision);
-ALTER TYPE resource
-  OWNER TO postgres;
 
 
 
