@@ -88,13 +88,15 @@ def specificreportpg(db):
     datatriggers = databasespecificpg.get_database_triggers()
     dataindexs = databasespecificpg.get_database_indexs()
     datatablestatics = databasespecificpg.get_database_data_tables()
+    datatablesmant = databasespecificpg.get_database_data_tables_mant()
+    data_commit_rollback = databasespecificpg.get_database_data_commit_rollback()
     dataactivity = databasespecificpg.get_database_activity()
 
     databasespecificpg.disconect()
 
     return template('reportspecificpg.tpl', db=db, datadate=datadate[0], datatime=datatime[0], dataweight=dataweight,
                      dataviews=dataviews,  datatriggers=datatriggers, dataindexs=dataindexs,
-                     datatablestatics=datatablestatics,dataactivity=dataactivity)
+                     datatablestatics=datatablestatics,datatablesmant=datatablesmant,data_commit_rollback=data_commit_rollback,dataactivity=dataactivity)
 
 
 ####  reports for history of specific PG db
@@ -170,7 +172,7 @@ def llamadaajaxdatosupdate():
 @amt4pg.route('/ajaxdatosselect', method='GET')
 def llamadaajaxdatosupdate():
     datosbd = pg.executequery(
-        "select datname,tup_fetched from pg_stat_database where datname not like 'template%' and tup_fetched<>0")
+        "select datname,tup_returned from pg_stat_database where datname not like 'template%' and tup_fetched<>0")
     for values in datosbd:
         query = "insert into log_values values (%s,'Select', now(),%d)" % ("'" + values[0] + "'", values[1])
         pg.executupdateequery(query)

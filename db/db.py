@@ -92,6 +92,16 @@ class databasepg(database):
        self.databases_count = self.executequery(query)
        return self.databases_count
 
+    def get_databases_commit(self):
+       query = "select datname,xact_commit from pg_stat_database  where datname not like 'template%' and xact_commit<>0 "
+       self.databases_count = self.executequery(query)
+       return self.databases_count
+
+    def get_databases_rollback(self):
+       query = "select datname,xact_rollback from pg_stat_database  where datname not like 'template%' and xact_rollback<>0"
+       self.databases_count = self.executequery(query)
+       return self.databases_count
+
 
 
 
@@ -144,7 +154,7 @@ class specificdatabasepg(database):
 
 
     def get_database_indexs(self):
-       query = "SELECT idstat.schemaname,idstat.relname AS table_name,indexrelname AS index_name,idstat.idx_scan AS times_used, " \
+       query = "SELECT idstat.schemaname,idstat.relname AS table_name,indexrelname AS index_name,idstat.idx_scan AS times_used,idstat.idx_tup_fetch, " \
                " round((pg_relation_size(idstat.indexrelid::regclass)/1024)/1024::numeric,2)::text || ' MB' AS index_size " \
                " FROM pg_stat_user_indexes AS idstat  JOIN pg_stat_user_tables AS tabstat ON idstat.relname = tabstat.relname  ORDER BY 4 desc;"
        self.database_indexs = self.executequery(query)
@@ -153,14 +163,30 @@ class specificdatabasepg(database):
 
 
     def get_database_data_tables(self):
-       query = " SELECT ns.nspname||'.'|| pg.relname as name , reltuples::int ,round((pg_relation_size(psat.relid::regclass)/1024)/1024::numeric,2)::text || ' MB' as Weigth, " \
-               " psat.seq_scan,n_dead_tup, autovacuum_count,COALESCE( to_char(last_autovacuum,'YYYY:MM:DD-HH24:MI:SS'),'-'),vacuum_count,COALESCE(to_char(last_vacuum,'YYYY:MM:DD-HH24:MI:SS'),'-' ) " \
-               " FROM pg_class pg JOIN pg_stat_all_tables psat ON (pg.relname = psat.relname) " \
-               " join pg_namespace a on ( pg.relnamespace = a.oid)  join pg_namespace ns  on (pg.relnamespace = ns.oid)  where a.nspname <> 'pg_catalog' " \
-               " and a.nspname <> 'information_schema' and a.nspname <> 'pg_toast'  ORDER BY 2 DESC ;"
+       query = "  SELECT ns.nspname||'.'|| pg.relname as name , reltuples::int ,round((pg_relation_size(psat.relid::regclass)/1024)/1024::numeric,2)::text || ' MB' as Weigth," \
+               " psat.seq_scan,psat.seq_tup_read,COALESCE( psat.idx_scan,0), COALESCE( psat.idx_tup_fetch,0),n_tup_ins,n_tup_del,n_tup_upd FROM pg_class pg JOIN pg_stat_all_tables psat ON (pg.relname = psat.relname) " \
+               "join pg_namespace a on ( pg.relnamespace = a.oid)  join pg_namespace ns  on (pg.relnamespace = ns.oid)  where a.nspname <> 'pg_catalog' " \
+               " and a.nspname <> 'information_schema' and a.nspname <> 'pg_toast'  ORDER BY 2 DESC "
        self.database_data_tables = self.executequery(query)
 
        return self.database_data_tables
+
+
+    def get_database_data_tables_mant(self):
+       query = "  SELECT ns.nspname||'.'|| pg.relname as name , psat.n_dead_tup, autovacuum_count,COALESCE( to_char(last_autovacuum,'YYYY:MM:DD-HH24:MI:SS'),'-'),vacuum_count," \
+               "COALESCE(to_char(last_vacuum,'YYYY:MM:DD-HH24:MI:SS'),'-' ) , analyze_count,COALESCE( to_char(last_analyze,'YYYY:MM:DD-HH24:MI:SS'),'-'),autoanalyze_count," \
+               "COALESCE( to_char(last_autoanalyze,'YYYY:MM:DD-HH24:MI:SS'),'-')  FROM pg_class pg JOIN pg_stat_all_tables psat ON (pg.relname = psat.relname)  join pg_namespace a on" \
+               " ( pg.relnamespace = a.oid)  join pg_namespace ns  on (pg.relnamespace = ns.oid)  where a.nspname <> 'pg_catalog'    and a.nspname <> 'information_schema' and a.nspname <> 'pg_toast'  ORDER BY 2 DESC   "
+       self.database_data_tables_mant = self.executequery(query)
+
+       return self.database_data_tables_mant
+
+
+    def get_database_data_commit_rollback(self):
+       query = " select xact_commit,xact_rollback from pg_stat_database  where datname not like 'template%' and datname='"+self.db+"'"
+       self.database_data_commit_rollback = self.executequery(query)
+
+       return self.database_data_commit_rollback
 
 
     def get_database_activity(self):
@@ -169,11 +195,6 @@ class specificdatabasepg(database):
 
        return self.database_activity
 
-    def get_database_weigth_history(self,db):
-       query = "select db,date::date, max(value) from log_values  where metric = 'Weigth' and db = %s group by 1,2 order by 1,2" % ("'" + str(db) + "'")
-       database_weigth_activity = self.executequery(query)
-
-       return database_weigth_activity
 
 
     def get_database_activity_history(self,db,activity):

@@ -36,6 +36,27 @@
 
 <br>
 
+<div class="panel panel-default" align="center"  >
+<div class="panel-heading" align="center"  ><b style="color:#ffffff " >Commits/Rollbacks:</b></div>
+
+<table border="1" class="table table-striped"   >
+<tr >
+ <td ><b>Commit</b></td>
+ <td><b>Rollback</b></td>
+</tr>
+%for field in data_commit_rollback:
+<tr class="contenido_tabla">
+ <td >{{field[0]}}</td>
+ <td>{{field[1]}}</td>
+</tr>
+%end
+</table>
+
+</div>
+
+<br>
+
+
 
 
 
@@ -49,11 +70,12 @@
  <td><b>Tuplas</b></td>
  <td><b>Peso</b></td>
  <td><b>Escaneo Seq.</b></td>
- <td><b>Tuplas Muertas</b></td>
- <td><b>Cant. AutoVacuum</b></td>
- <td><b>Último AutoVacuum</b></td>
- <td><b>Cant. Vacuum </b></td>
- <td><b>Último Vacuum</b></td>
+ <td><b>Tup. Obt. Seq.</b></td>
+ <td><b>Escaneo Ind.</b></td>
+ <td><b>Tup. Obt. Ind.</b></td>
+ <td><b>Tup. Ins.</b></td>
+ <td><b>Tup. Elm.</b></td>
+ <td><b>Tup. Act.</b></td>
 </tr>
 %for field in datatablestatics:
 <tr class="contenido_tabla">
@@ -66,6 +88,42 @@
  <td>{{field[6]}}</td>
  <td>{{field[7]}}</td>
  <td>{{field[8]}}</td>
+ <td>{{field[9]}}</td>
+</tr>
+%end
+</table>
+</div>
+<br>
+
+
+<div class="panel panel-default">
+<div class="panel-heading" align="center" ><b style="color:#ffffff " > Mantenimiento:</b></div>
+
+<table border="1" class="table table-striped">
+<tr>
+  <td><b>Nombre</b></td>
+ <td><b>Tup. Muertas</b></td>
+ <td><b>Cant. AutoVaccum</b></td>
+ <td><b>Ult. AutoVaccum</b></td>
+ <td><b>Cant. Vaccum</b></td>
+ <td><b>Ult. Vaccum</b></td>
+ <td><b>Cant. Analyze</b></td>
+ <td><b>Ult. Analyze</b></td>
+ <td><b>Cant. AutoAnalyze</b></td>
+ <td><b>Ult. AutoAnalyze</b></td>
+</tr>
+%for field in datatablesmant:
+<tr class="contenido_tabla">
+ <td>{{field[0]}}</td>
+ <td>{{field[1]}}</td>
+ <td>{{field[2]}}</td>
+ <td>{{field[3]}}</td>
+ <td>{{field[4]}}</td>
+ <td>{{field[5]}}</td>
+ <td>{{field[6]}}</td>
+ <td>{{field[7]}}</td>
+ <td>{{field[8]}}</td>
+ <td>{{field[9]}}</td>
 </tr>
 %end
 </table>
@@ -81,6 +139,7 @@
  <td><b>Tabla</b></td>
  <td><b>Nombre</b></td>
  <td><b>Veces Usado</b></td>
+ <td><b>Tup. Obtenidas</b></td>
  <td><b>Peso Índice</b></td>
 </tr>
 %for field in dataindexs:
@@ -91,6 +150,7 @@
  <td>{{field[2]}}</td>
  <td>{{field[3]}}</td>
  <td>{{field[4]}}</td>
+ <td>{{field[5]}}</td>
 </tr>
 %end
 </table>
