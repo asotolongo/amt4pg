@@ -28,7 +28,7 @@ maximo valor diario
 #Instalación
 se debe instalar las dependencias:
 
-python-bottle , psycopg2 , plpython
+python-bottle , psycopg2 , plpython, psutil   
 
 -sudo apt-get install python-bottle python-psycopg2 (en el cliente donde va a estar tu app)
 -sudo apt-get install python-psutil postgresql-plpython-X.Y (en el servidor de PG)
